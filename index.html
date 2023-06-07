@@ -16,28 +16,7 @@
 
   <script>
     function getCoordinates() {
-      // Try GPS-based geolocation
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, handleGeolocationError);
-      } else {
-        console.log("Geolocation is not supported by this browser.");
-        getIPCoordinates();
-      }
-    }
-
-    function showPosition(position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
-      document.getElementById("coordinates").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
-    }
-
-    function handleGeolocationError(error) {
-      console.log("Geolocation error:", error);
-      getIPCoordinates();
-    }
-
-    function getIPCoordinates() {
-      fetch('https://ipapi.com/json')
+      fetch('https://ipapi.co/json/')
         .then(function(response) {
           return response.json();
         })
