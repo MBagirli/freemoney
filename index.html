@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get User Coordinates</title>
+  <style>
+    #coordinates {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Get User Coordinates</h1>
+
+  <p>Your coordinates:</p>
+  <p id="coordinates"></p>
+
+  <script>
+    function getCoordinates() {
+      // Try GPS-based geolocation
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, handleGeolocationError);
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+        getIPCoordinates();
+      }
+    }
+
+    function showPosition(position) {
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      document.getElementById("coordinates").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+    }
+
+    function handleGeolocationError(error) {
+      console.log("Geolocation error:", error);
+      getIPCoordinates();
+    }
+
+    function getIPCoordinates() {
+      fetch('https://ipapi.com/json')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          var latitude = data.latitude;
+          var longitude = data.longitude;
+          document.getElementById("coordinates").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+        })
+        .catch(function(error) {
+          console.log('Error:', error);
+        });
+    }
+
+    window.onload = getCoordinates;
+  </script>
+</body>
+</html>
